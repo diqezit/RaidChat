@@ -1,0 +1,13 @@
+## Interface: 30300
+## Title: RaidChat
+## Notes: Raid recruitment from public chat.
+## Author: Diqezit
+## Version: 1.1.0
+## Dependencies: Ace3
+## SavedVariables: RaidChatDB
+
+Raid.lua
+Parser.lua
+Core.lua
+Controls.lua
+View.lua
