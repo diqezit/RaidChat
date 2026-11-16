@@ -268,9 +268,18 @@ function RaidChat.Parser.Parse(message)
 
     text = text:gsub("[%z\1-\32\127]+", " "):trim():lower()
 
-    if
-        not hasAny(text, RaidChat.Raid.words.recruiting) or hasAny(text, RaidChat.Raid.words.sales)
-    then
+    if not hasAny(text, RaidChat.Raid.words.recruiting) then
+        -- LF must request a role or class, not just name a raid to join
+        local wanted = text:match(left .. "lf" .. right .. "%s*(.*)")
+            or text:match(left .. "looking for" .. right .. "%s*(.*)")
+        local token = wanted and wanted:match("^%d*%s*x?%s*([%a]+)")
+
+        if token ~= "all" and not RaidChat.Raid.tokens[token] then
+            return {}
+        end
+    end
+
+    if hasAny(text, RaidChat.Raid.words.sales) then
         return {}
     end
 

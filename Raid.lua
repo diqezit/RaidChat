@@ -107,11 +107,10 @@ RaidChat.Raid = {
         },
         recruiting = {
             "lfm",
-            "lf",
             "need",
             "needs",
             "needed",
-            "looking for",
+            "looking for more",
             "spots?",
         },
         notRoles = {
