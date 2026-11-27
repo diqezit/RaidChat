@@ -281,7 +281,8 @@ function RaidChat.Parser.Parse(message)
         end
     end
 
-    if hasAny(text, RaidChat.Raid.words.sales) then
+    -- A boost slot inside a run ad is not a sale
+    if hasAny(text:gsub("boost slots?", ""), RaidChat.Raid.words.sales) then
         return {}
     end
 
