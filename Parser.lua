@@ -25,11 +25,11 @@ local function sortMatches(a, b)
     return a.first < b.first
 end
 
-local function findRaids(text)
+local function findRaids(text, field)
     local found = {}
 
     for _, raid in ipairs(RaidChat.Raid.list) do
-        for _, alias in ipairs(raid.aliases) do
+        for _, alias in ipairs(raid[field] or {}) do
             for first, after in text:gmatch("()" .. left .. alias .. right .. "()") do
                 found[#found + 1] = { first = first, after = after, raid = raid }
             end
@@ -96,7 +96,7 @@ local function sizes(after, before, nextRaid)
         return RaidChat.Enum.Size.ANY
     end
 
-    local _, last, value = format:find("^%s*[%(%[%-%:/%.,]*%s*(%d+)")
+    local _, last, value = format:find("^%s*[%(%[%-%:/%.,!]*%s*(%d+)")
     local size = RaidChat.Raid.sizes[value]
 
     if size then
@@ -258,8 +258,10 @@ function RaidChat.Parser.Parse(message)
     local text = message
 
     if text:find("|", 1, true) then
+        -- Quest links keep their name because it identifies the raid
         -- Linked achievements describe past kills rather than the advertised group
-        text = text:gsub("|H.-|h.-|h", " ")
+        text = text:gsub("|Hquest:.-|h%[?(.-)%]?|h", " %1 ")
+            :gsub("|H.-|h.-|h", " ")
             :gsub("|c%x%x%x%x%x%x%x%x", "")
             :gsub("|r", "")
             :gsub("|T.-|t", " ")
@@ -291,7 +293,13 @@ function RaidChat.Parser.Parse(message)
         return {}
     end
 
-    local matches = findRaids(text)
+    local matches = findRaids(text, "aliases")
+
+    -- Weekly raid quest names identify the raid only when the ad does not name it
+    if #matches == 0 then
+        matches = findRaids(text, "quests")
+    end
+
     local results = {}
     local seen = #matches > 1 and {} or nil
     local consumed = 1

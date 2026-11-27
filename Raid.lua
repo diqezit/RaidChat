@@ -32,6 +32,7 @@ RaidChat.Raid = {
             id = RaidChat.Enum.Raid.ICC,
             label = "|cff80cfffICC|r",
             aliases = { "icecrown citadel", "icecrown", "icc" },
+            quests = { "lord marrowgar must die" },
         },
         {
             id = RaidChat.Enum.Raid.RS,
@@ -47,6 +48,7 @@ RaidChat.Raid = {
                 "togc",
                 "toc",
             },
+            quests = { "lord jaraxxus must die" },
         },
         {
             id = RaidChat.Enum.Raid.VOA,
@@ -57,11 +59,23 @@ RaidChat.Raid = {
             id = RaidChat.Enum.Raid.ULD,
             label = "|cff88d8c8Ulduar|r",
             aliases = { "ulduar", "uld" },
+            quests = {
+                "flame leviathan must die",
+                "ignis the furnace master must die",
+                "razorscale must die",
+                "xt%-002 deconstructor must die",
+            },
         },
         {
             id = RaidChat.Enum.Raid.NAXX,
             label = "|cffa8d888Naxxramas|r",
             aliases = { "naxxramas", "naxx" },
+            quests = {
+                "anub'rekhan must die",
+                "instructor razuvious must die",
+                "noth the plaguebringer must die",
+                "patchwerk must die",
+            },
         },
         {
             id = RaidChat.Enum.Raid.ONY,
